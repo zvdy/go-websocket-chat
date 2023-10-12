@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Room {{.RoomID}}</title>
+    <script>
+        var ws = new WebSocket("ws://localhost:8080/ws?room={{.RoomID}}");
+
+        ws.onmessage = function(event) {
+            var msg = JSON.parse(event.data);
+            var chat = document.getElementById("chat");
+            var line = document.createElement("div");
+            line.textContent = msg.username + ": " + msg.text;
+            chat.appendChild(line);
+        };
+
+        function sendMessage() {
+            var username = document.getElementById("username").value;
+            var text = document.getElementById("text").value;
+            var msg = {username: username, text: text};
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/message?room={{.RoomID}}");
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify(msg));
+            document.getElementById("text").value = "";
+        }
+    </script>
+</head>
+<body>
+    <h1>Chat Room {{.RoomID}}</h1>
+    <div id="chat"></div>
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username">
+    </div>
+    <div>
+        <label for="text">Message:</label>
+        <input type="text" id="text">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</body>
+</html>

@@ -1,8 +1,8 @@
-# Chat App
+# 📢 Chat App
 
 This is a simple chat app built with Go and WebSocket. It allows multiple users to join a chat room and send messages to each other in real time.
 
-## Installation
+## ⚙️ Installation
 
 To install the chat app, you need to have Go installed on your computer. You can download and install Go from the official website: https://golang.org/dl/
 
@@ -15,7 +15,7 @@ git clone https://github.com/zvdy/go-websocket-chat.git
 
 This will download the chat app source code to your current directory.
 
-## Usage
+## 🧑‍💻 Usage
 
 To start the chat app server, navigate to the `go-websocket-chat` directory in your terminal and run the following command:
 
@@ -39,6 +39,15 @@ You can also send messages programmatically using the WebSocket API. To do this,
 }
 ```
 Replace Alice with your username and Hello, world! with your message text.
+
+You can use the following curl command to send a message to the chat room:
+
+```
+curl -X POST -H "Content-Type: application/json" -d '{"username":"your_username","text":"your_message"}' http://localhost:8080/message?room=your_room_id
+```
+
+---
+
 
 To open a WebSocket connection, send an HTTP GET request to the /ws endpoint with the room query parameter. For example, to join a chat room with ID test, run the following command in your terminal:
 

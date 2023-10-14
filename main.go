@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"html/template"
 	"log"
 	"net/http"
@@ -29,6 +30,7 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println(err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
 	}
 
@@ -85,6 +87,15 @@ func handleChatMessage(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&msg)
 	if err != nil {
 		log.Println(err)
+		http.Error(w, "400 Bad request", http.StatusBadRequest)
+		return
+	}
+
+	// Validate message
+	err = validateMessage(msg)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -93,6 +104,16 @@ func handleChatMessage(w http.ResponseWriter, r *http.Request) {
 
 	// Broadcast message to all connections in room
 	chatRoom.Broadcast <- msg
+}
+
+func validateMessage(msg message) error {
+	if msg.Username == "" {
+		return errors.New("username cannot be empty")
+	}
+	if msg.Text == "" {
+		return errors.New("message cannot be empty")
+	}
+	return nil
 }
 
 func handleChatRoom(w http.ResponseWriter, r *http.Request) {
@@ -137,6 +158,15 @@ func handleChatRoom(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	// Serve static files
+	fs := http.FileServer(http.Dir("static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+
+	// Serve styles.css file
+	http.HandleFunc("/styles.css", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "static/styles.css")
+	})
+
 	// Register HTTP handlers
 	http.HandleFunc("/ws", handleWebSocket)
 	http.HandleFunc("/chat", handleChatRoom)

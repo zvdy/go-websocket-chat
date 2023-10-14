@@ -1,6 +1,7 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+    font-family: 'Source Code Pro', monospace;
+    background-color: #1a1a1a;
+    color: #f2f2f2;
 }
 
 h1 {
@@ -17,11 +18,13 @@ label {
 }
 
 input[type="text"] {
-    width: 200px;
+    width: 100%;
     padding: 5px;
     border-radius: 5px;
     border: none;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    background-color: #2b2b2b;
+    color: #f2f2f2;
 }
 
 button {
@@ -43,6 +46,8 @@ button:hover {
     padding: 10px;
     max-height: 400px;
     overflow-y: scroll;
+    background-color: #2b2b2b;
+    color: #f2f2f2;
 }
 
 .message {
@@ -57,8 +62,11 @@ button:hover {
     margin-left: 5px;
 }
 
-.emoji {
-    height: 20px;
-    width: 20px;
-    margin-left: 5px;
+@media only screen and (max-width: 600px) {
+    input[type="text"] {
+        width: 80%;
+    }
+    button {
+        width: 20%;
+    }
 }

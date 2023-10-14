@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Chat Room {{.RoomID}}</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <script>
         var ws = new WebSocket("ws://localhost:8080/ws?room={{.RoomID}}");
 
@@ -9,7 +10,15 @@
             var msg = JSON.parse(event.data);
             var chat = document.getElementById("chat");
             var line = document.createElement("div");
-            line.textContent = msg.username + ": " + msg.text;
+            line.classList.add("message");
+            var username = document.createElement("span");
+            username.classList.add("username");
+            username.textContent = msg.username + ": ";
+            line.appendChild(username);
+            var text = document.createElement("span");
+            text.classList.add("text");
+            text.textContent = msg.text;
+            line.appendChild(text);
             chat.appendChild(line);
         };
 

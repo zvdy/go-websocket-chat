@@ -22,11 +22,13 @@ To start the chat app server, navigate to the `go-websocket-chat` directory in y
 ```
 go run main.go
 ```
-
+> You can also build the chat app server by using the Dockerfile in the root directory of the project. To do this, run the following command in your terminal: `docker build -t go-websocket-chat .` This will build the chat app server and tag it as `go-websocket-chat`. You can then run the chat app server by running the following command: `docker run -p 8080:8080 go-websocket-chat`.
 
 This will start the server on port 8080. You can access the chat app by going to `http://localhost:8080/chat` in your web browser.
 
 To join a chat room, append the `room` query parameter to the URL. For example, to join a chat room with ID `test`, go to `http://localhost:8080/chat?room=test`.
+
+![image](/images/sample.png)
 
 To send a message to the chat room, type your message in the input field at the bottom of the chat window and press Enter. Your message will be broadcast to all users in the chat room.
 
@@ -45,6 +47,7 @@ You can use the following curl command to send a message to the chat room:
 ```
 curl -X POST -H "Content-Type: application/json" -d '{"username":"your_username","text":"your_message"}' http://localhost:8080/message?room=your_room_id
 ```
+
 
 ---
 

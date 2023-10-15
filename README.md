@@ -22,7 +22,7 @@ To start the chat app server, navigate to the `go-websocket-chat` directory in y
 ```
 go run main.go
 ```
-> You can also build the chat app server by using the Dockerfile in the root directory of the project. To do this, run the following command in your terminal: `docker build -t go-websocket-chat .` This will build the chat app server and tag it as `go-websocket-chat`. You can then run the chat app server by running the following command: `docker run -p 8080:8080 go-websocket-chat`.
+> You can also build the chat app server by using the Dockerfile in the root directory of the project. To do this, run the following command in your terminal: `docker build -t go-websocket-chat .` This will build the chat app server and tag it as `go-websocket-chat`. You can then run the chat app server by running the following command: `docker run -p 8080:8080 go-websocket-chat`. [Here](https://hub.docker.com/r/zvdy/go-websocket-chat/tags) is the latest docker tag.
 
 This will start the server on port 8080. You can access the chat app by going to `http://localhost:8080/chat` in your web browser.
 
